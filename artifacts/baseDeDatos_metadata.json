@@ -1,0 +1,117 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "idRegister",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "humedad",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "int256",
+						"name": "temperatura",
+						"type": "int256"
+					}
+				],
+				"name": "registroAnyadido",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_idRegister",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_humedad",
+						"type": "string"
+					},
+					{
+						"internalType": "int256",
+						"name": "_temperatura",
+						"type": "int256"
+					}
+				],
+				"name": "addRegister",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_idRegister",
+						"type": "uint256"
+					}
+				],
+				"name": "getRegister",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					},
+					{
+						"internalType": "int256",
+						"name": "",
+						"type": "int256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Proyecto/smart.sol": "baseDeDatos"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Proyecto/smart.sol": {
+			"keccak256": "0xd816ffb519f677aab43e61059cad295f95d1d5eb9a10e3f10134ee2e61592509",
+			"urls": [
+				"bzz-raw://44d53484c5c4d458880e386b4c73141def3c4560d6a81578e8e774aefdb4281b",
+				"dweb:/ipfs/QmXkfcT4YpwgSLQUiEFdJzwTzE7VSLGzP6qFqu7vFCKBbV"
+			]
+		}
+	},
+	"version": 1
+}

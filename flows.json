@@ -1,0 +1,217 @@
+[
+    {
+        "id": "3a6b1404f8c5c719",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "48206ac660196846",
+        "type": "mqtt in",
+        "z": "3a6b1404f8c5c719",
+        "name": "MQTT_IN1",
+        "topic": "sensor/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9b1fd2549fe06e22",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "ac7c02a621460bc4",
+                "4e2a8341ee5e5e46"
+            ]
+        ]
+    },
+    {
+        "id": "57c4e4691946367a",
+        "type": "mqtt in",
+        "z": "3a6b1404f8c5c719",
+        "name": "MQTT_IN2",
+        "topic": "sensor/humedad",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9b1fd2549fe06e22",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 400,
+        "wires": [
+            [
+                "b4270fd9667b5bb3",
+                "4e2a8341ee5e5e46"
+            ]
+        ]
+    },
+    {
+        "id": "ac7c02a621460bc4",
+        "type": "debug",
+        "z": "3a6b1404f8c5c719",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "b4270fd9667b5bb3",
+        "type": "debug",
+        "z": "3a6b1404f8c5c719",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "59dd57a72782ec63",
+        "type": "debug",
+        "z": "3a6b1404f8c5c719",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "4e2a8341ee5e5e46",
+        "type": "function",
+        "z": "3a6b1404f8c5c719",
+        "name": "function 1",
+        "func": "// Inicializa el contexto de flujo si aún no existe\nflow.set('temperatura', flow.get('temperatura') || null);\nflow.set('humedad', flow.get('humedad') || null);\n\n// Verifica cuál entrada MQTT está llegando\nif (msg.topic === 'sensor/temperatura') {\n    flow.set('temperatura', String(msg.payload)); // Casteo a string\n} else if (msg.topic === 'sensor/humedad') {\n    flow.set('humedad', String(msg.payload)); // Casteo a string\n}\n\n// Recupera los valores de ambos MQTT\nvar temperatura = flow.get('temperatura');\nvar humedad = flow.get('humedad');\n\n// Si ambos valores están disponibles, combina y envía el nuevo payload\nif (temperatura !== null && humedad !== null) {\n    msg.payload = `${temperatura} ${humedad}`;\n\n    // Resetea los valores en el contexto de flujo\n    flow.set('temperatura', null);\n    flow.set('humedad', null);\n\n    return msg;\n}\n\n// Si uno de los valores aún no está disponible, no devuelve nada (espera al siguiente mensaje)\nreturn null;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "add24e7597f187fb"
+            ]
+        ]
+    },
+    {
+        "id": "add24e7597f187fb",
+        "type": "delay",
+        "z": "3a6b1404f8c5c719",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 600,
+        "y": 240,
+        "wires": [
+            [
+                "1c64eec6006bef72"
+            ]
+        ]
+    },
+    {
+        "id": "1c64eec6006bef72",
+        "type": "exec",
+        "z": "3a6b1404f8c5c719",
+        "command": "node C:\\Users\\pchov\\Desktop\\Proyecto\\addValuesNode.js",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 850,
+        "y": 380,
+        "wires": [
+            [],
+            [
+                "59dd57a72782ec63"
+            ],
+            [
+                "59dd57a72782ec63"
+            ]
+        ]
+    },
+    {
+        "id": "35199548b932e616",
+        "type": "debug",
+        "z": "3a6b1404f8c5c719",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "9b1fd2549fe06e22",
+        "type": "mqtt-broker",
+        "name": "localhost",
+        "broker": "194.30.15.135",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
